@@ -2,7 +2,7 @@
 
 using namespace std;
 // temp constants
-#define MAX_J 55
+#define MAX_J 30
 #define MIN_J 0
 #define JOYSTICK 32767
 
@@ -17,6 +17,7 @@ namespace robot{
         char left = limits.convert(left_value);
         // for joystick control press R2
         if (!gamepad.buttons.empty() && gamepad.buttons[5].state == 1){
+            human_intervention = true;
             float joystick_left = (float)-gamepad.axes[1]/JOYSTICK; // normalize this to config file
             if (joystick_left > 0){
                 joystick_left = abs(joystick_left) * (MAX_J - MIN_J) + MIN_J;
@@ -25,16 +26,13 @@ namespace robot{
             }
             // drive straight
             if (gamepad.axes[7] == -32767){
-                joystick_left = joystick_left/2 + 30; // max value for char 127
-
+                joystick_left = joystick_left / 2 + 30; // max value for char 127
             }
             else if (gamepad.axes[7] == 32767){
-                joystick_left = joystick_left/2 - 30;
+                joystick_left = joystick_left / 2 - 30;
             }
             left = (char) joystick_left;
         }
-
-
         // autonomous
         if (message[0] != left)
             need_update = true;
@@ -44,6 +42,7 @@ namespace robot{
     void Robot_agent::set_right(double right_value) {
         char right = limits.convert(right_value);
         if (!gamepad.buttons.empty() && gamepad.buttons[5].state == 1){
+            human_intervention = true;
             float joystick_right = (float)-gamepad.axes[4]/JOYSTICK;
             if (joystick_right > 0){
                 joystick_right = abs(joystick_right) * (MAX_J - MIN_J) + MIN_J;
@@ -78,14 +77,16 @@ namespace robot{
     }
 
     bool Robot_agent::update() {
+
         if (!need_update) return true;
 
-        cout << "robot_agent " << int(message[0]) << " : " << int(message[1]) << endl;
+//        cout << "robot_agent " << int(message[0]) << " : " << int(message[1]) << endl;
         bool res = connection.send_data(message,3);
         message[2] &=~(1UL << 3);
         message[2] &=~(1UL << 4);
         message[2] &=~(1UL << 5);
         message[2] &=~(1UL << 6);
+        human_intervention = false;
         return res;
     }
 
