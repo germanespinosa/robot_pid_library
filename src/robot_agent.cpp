@@ -77,6 +77,13 @@ namespace robot{
     }
 
     bool Robot_agent::update() {
+        if (reset_robot_agent) {
+            if (connect()) {
+                reset_robot_agent = false;
+            } else {
+                return false;
+            }
+        }
 
         if (!need_update) return true;
 
@@ -118,6 +125,7 @@ namespace robot{
     bool Robot_agent::connect(const string &ip, int port) {
         try {
             connection = connection.connect_remote(ip, port);
+            ip_address = ip;
             return true;
         } catch(...) {
             return false;
@@ -130,20 +138,24 @@ namespace robot{
 
     bool Robot_agent::connect() {
         //return connect("192.168.137.155");
-        return connect("127.0.0.1");
+        return connect(ip_address);
     }
+
+    bool no_reset_robot_agent = false;
 
     Robot_agent::Robot_agent(const controller::Agent_operational_limits &limits, int game_pad_port):
             message{0,0,0},
             limits(limits),
-            gamepad(game_pad_port){
+            gamepad(game_pad_port),
+            reset_robot_agent(no_reset_robot_agent){
         set_leds(true);
     }
 
     Robot_agent::Robot_agent(const controller::Agent_operational_limits &limits, std::string device_path):
             message{0,0,0},
             limits(limits),
-            gamepad(device_path){
+            gamepad(device_path),
+            reset_robot_agent(no_reset_robot_agent){
         set_leds(true);
     }
 
@@ -153,4 +165,11 @@ namespace robot{
         return true;
     }
 
+    Robot_agent::Robot_agent(const controller::Agent_operational_limits &limits, bool &reset_robot_agent) :
+            message{0,0,0},
+            limits(limits),
+            gamepad("/dev/input/js0"),
+            reset_robot_agent(reset_robot_agent){  // joystick device
+        set_leds(true);
+    }
 }

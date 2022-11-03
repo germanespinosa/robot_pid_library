@@ -4,6 +4,7 @@
 
 namespace robot {
     struct Robot_agent : controller::Agent {
+        explicit Robot_agent(const controller::Agent_operational_limits &limits, bool &reset_robot_agent);
         explicit Robot_agent(const controller::Agent_operational_limits &limits);
         explicit Robot_agent(const controller::Agent_operational_limits &limits, int game_pad_port);
         explicit Robot_agent(const controller::Agent_operational_limits &limits, std::string device_path);
@@ -24,6 +25,8 @@ namespace robot {
         static int port();
         controller::Agent_operational_limits limits;
         Gamepad_wrapper gamepad;
+        std::string ip_address {"192.168.137.155"};
+        bool &reset_robot_agent;
     private:
         easy_tcp::Connection connection{-1};
         bool need_update = false;

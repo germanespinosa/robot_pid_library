@@ -52,7 +52,7 @@ struct Gamepad_service : Message_service {
 namespace robot{
     Message_server<Gamepad_service> gamepad_server;
 
-    Gamepad_wrapper::Gamepad_wrapper(std::string &device_path) : Gamepad(device_path), ready(true) {
+    Gamepad_wrapper::Gamepad_wrapper(const std::string &device_path) : Gamepad(device_path), ready(true) {
 
     }
 
