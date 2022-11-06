@@ -76,7 +76,23 @@ namespace robot{
             message[2] &=~(1UL << led_number);
     }
 
+    // if reset reconnect and hardware reboot
     bool Robot_agent::update() {
+        if (reset_robot_agent) {
+            need_update = true;
+            message[2] |= 1UL << 4;
+        };
+
+        if (!need_update) return true;
+
+
+        bool res = connection.send_data(message,3);
+        message[2] &=~(1UL << 3);
+        message[2] &=~(1UL << 4);
+        message[2] &=~(1UL << 5);
+        message[2] &=~(1UL << 6);
+        human_intervention = false;
+
         if (reset_robot_agent) {
             if (connect()) {
                 reset_robot_agent = false;
@@ -85,15 +101,6 @@ namespace robot{
             }
         }
 
-        if (!need_update) return true;
-
-//        cout << "robot_agent " << int(message[0]) << " : " << int(message[1]) << endl;
-        bool res = connection.send_data(message,3);
-        message[2] &=~(1UL << 3);
-        message[2] &=~(1UL << 4);
-        message[2] &=~(1UL << 5);
-        message[2] &=~(1UL << 6);
-        human_intervention = false;
         return res;
     }
 
