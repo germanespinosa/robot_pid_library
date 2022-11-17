@@ -27,6 +27,7 @@ namespace robot {
         Gamepad_wrapper gamepad;
         std::string ip_address {"192.168.137.155"};
         bool &reset_robot_agent;
+        bool reset_step_one = true;
     private:
         easy_tcp::Connection connection{-1};
         bool need_update = false;

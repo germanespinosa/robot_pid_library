@@ -78,9 +78,14 @@ namespace robot{
 
     // if reset reconnect and hardware reboot
     bool Robot_agent::update() {
+//        cout << (int) message[0] << " " << (int) message[1] << endl;
+// probably should send message from robot that reset is complete
         if (reset_robot_agent) {
             need_update = true;
+            message[0] = (char) 0;
+            message[1] = (char) 0;
             message[2] |= 1UL << 4;
+            cout << "reset robot" << endl;
         };
 
         if (!need_update) return true;
@@ -94,12 +99,15 @@ namespace robot{
         human_intervention = false;
 
         if (reset_robot_agent) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             if (connect()) {
                 reset_robot_agent = false;
+                cout << "reconnect to robot" << endl;
             } else {
                 return false;
             }
         }
+
 
         return res;
     }
