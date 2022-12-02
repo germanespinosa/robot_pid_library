@@ -36,6 +36,7 @@ namespace robot{
         // autonomous
         if (message[0] != left)
             need_update = true;
+
         message[0] = left;
     }
 
@@ -65,8 +66,9 @@ namespace robot{
 
     void Robot_agent::capture() {
         message[2] |= 1UL << 3; //puff
-        message[2] |= 1UL << 6; // stop
+        message[2] |= 1UL << 6; // todo: add braking back to robot 
         need_update = true;
+        capture_update = true;
     }
 
     void Robot_agent::set_led(int led_number, bool val) {
@@ -78,7 +80,7 @@ namespace robot{
 
     // if reset reconnect and hardware reboot
     bool Robot_agent::update() {
-//        cout << (int) message[0] << " " << (int) message[1] << endl;
+// cout << (int) message[0] << " " << (int) message[1] << endl;
 // probably should send message from robot that reset is complete
         if (reset_robot_agent) {
             need_update = true;
@@ -88,7 +90,10 @@ namespace robot{
             cout << "reset robot" << endl;
         };
 
+
         if (!need_update) return true;
+//        else need_update = false; // make false once realize same value
+//        cout << (int) message[0] << " " << (int) message[1] << endl;
 
 
         bool res = connection.send_data(message,3);
@@ -99,7 +104,7 @@ namespace robot{
         human_intervention = false;
 
         if (reset_robot_agent) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000)); // TODO: ask German if this sleep is an issue
             if (connect()) {
                 reset_robot_agent = false;
                 cout << "reconnect to robot" << endl;
