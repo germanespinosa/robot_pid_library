@@ -15,6 +15,7 @@ namespace robot {
         virtual void set_right(double) override;
         virtual void capture() override;
         virtual bool update() override;
+        virtual void end_capture() override;
         virtual bool stop() override;
         void set_led(int, bool);
         void set_leds(bool);
@@ -28,7 +29,6 @@ namespace robot {
         std::string ip_address {"192.168.137.155"};
         bool &reset_robot_agent;
         bool reset_step_one = true;
-        bool capture_update = false;
     private:
         easy_tcp::Connection connection{-1};
         bool need_update = false;

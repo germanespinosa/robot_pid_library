@@ -68,7 +68,10 @@ namespace robot{
         message[2] |= 1UL << 3; //puff
         message[2] |= 1UL << 6; // todo: add braking back to robot 
         need_update = true;
-        capture_update = true;
+    }
+
+    void Robot_agent::end_capture() {
+        need_update = true;
     }
 
     void Robot_agent::set_led(int led_number, bool val) {
@@ -80,8 +83,7 @@ namespace robot{
 
     // if reset reconnect and hardware reboot
     bool Robot_agent::update() {
-// cout << (int) message[0] << " " << (int) message[1] << endl;
-// probably should send message from robot that reset is complete
+
         if (reset_robot_agent) {
             need_update = true;
             message[0] = (char) 0;
@@ -92,7 +94,7 @@ namespace robot{
 
 
         if (!need_update) return true;
-//        else need_update = false; // make false once realize same value
+        else need_update = false; // make false once realize same value
 //        cout << (int) message[0] << " " << (int) message[1] << endl;
 
 
