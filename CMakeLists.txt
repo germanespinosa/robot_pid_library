@@ -53,6 +53,13 @@ install_git_dependency(Controller https://github.com/germanespinosa/cellworld_pi
         CMAKE_PROJECT
         IMPORT_TARGETS controller)
 
+#install_git_dependency(Tick_controller https://github.com/germanespinosa/cellworld_controller
+#        CMAKE_PROJECT
+#        BRANCH tick-controller
+#        IMPORT_TARGETS controller
+#        CONNECTED)
+
+
 ###
 ### MAIN LIBRARY SETUP
 ###
@@ -100,8 +107,8 @@ target_link_libraries( robot_lib
 
 include_directories( include )
 
-add_executable(robot src/tool/fake_robot.cpp)
-target_link_libraries( robot PUBLIC robot_lib)
+add_executable(fake_robot src/tool/fake_robot.cpp)
+target_link_libraries( fake_robot PUBLIC robot_lib)
 
 add_executable(stop_fake_robot src/tool/stop_fake_robot.cpp)
 target_link_libraries( stop_fake_robot PUBLIC robot_lib)
