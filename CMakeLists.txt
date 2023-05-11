@@ -51,7 +51,8 @@ install_git_dependency(Experiment_service https://github.com/germanespinosa/expe
         IMPORT_TARGETS experiment_service)
 install_git_dependency(Controller https://github.com/germanespinosa/cellworld_pid_controller
         CMAKE_PROJECT
-        IMPORT_TARGETS controller)
+        IMPORT_TARGETS controller
+        CONNECTED)
 
 #install_git_dependency(Tick_controller https://github.com/germanespinosa/cellworld_controller
 #        CMAKE_PROJECT

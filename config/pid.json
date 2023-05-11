@@ -5,6 +5,6 @@
   "pursue_speed" : 1,
   "P_explore" : 0.2,
   "I_explore" : 0.001,
-  "D_explore" : 0.35,
+  "D_explore" : 0.1,
   "explore_speed"  : 0.6
 }
