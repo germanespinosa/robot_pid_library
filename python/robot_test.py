@@ -4,7 +4,7 @@ from random import choice
 from cellworld import World, Display, Location, Agent_markers, Capture, Capture_parameters, Step, Timer, Cell_group_builder, to_radians, to_degrees, Location_list, Cell_group
 from cellworld_controller_service import ControllerClient
 from cellworld_experiment_service import ExperimentClient
-
+from cellworld_tracking import TrackingService, TrackingClient
 
 display = None
 world = None
@@ -48,7 +48,7 @@ predator = AgentData('predator')
 
 # initialize world
 world = World.get_from_parameters_names("hexagonal", "canonical")
-display = Display(world, fig_size=(9.0*.75, 8.0*.75), animated=True)
+display = Display(world, fig_size=(10, 10), animated=True)
 time_out = 1.0
 
 
@@ -86,8 +86,9 @@ while running:
         display.agent(step=predator.step, color="gray", size=10)
 
     display.fig.canvas.draw_idle()
-    display.fig.canvas.start_event_loop(0.001)
-    sleep(0.1)
+    display.fig.canvas.start_event_loop(0.1)
+    print ("it's working")
+#    sleep(0.1)
 
 controller.unsubscribe()
 controller.stop()

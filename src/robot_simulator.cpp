@@ -26,7 +26,7 @@ namespace robot {
     Polygon_list cell_polygons;
     int frame_number = 0;
     mutex rm;
-    Tracking_simulator *tracking_simulator = nullptr;
+    Tracking_client *tracking_simulator = nullptr;
 
     Prey_simulator_server prey_simulator;
 
@@ -112,13 +112,15 @@ namespace robot {
         while (robot_running){
             robot_state.update();
             auto step = robot_state.to_step();
-            tracking_simulator->send_update(step);
-            if (!prey_simulator.last_update.time_out()) {
-                auto prey_step = step;
-                prey_step.location = prey_simulator.location;
-                prey_step.rotation = prey_simulator.rotation;
-                prey_step.agent_name = "prey";
-                tracking_simulator->send_update(prey_step);
+            if (tracking_simulator) {
+                tracking_simulator->send_step(step);
+                if (!prey_simulator.last_update.time_out()) {
+                    auto prey_step = step;
+                    prey_step.location = prey_simulator.location;
+                    prey_step.rotation = prey_simulator.rotation;
+                    prey_step.agent_name = "prey";
+                    tracking_simulator->send_step(prey_step);
+                }
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(robot_interval));
         }
@@ -128,7 +130,7 @@ namespace robot {
 
     thread simulation_thread;
 
-    void Robot_simulator::start_simulation(cell_world::World world, Location location, double rotation, unsigned int interval, Tracking_simulator &new_tracking_simulator) {
+    void Robot_simulator::start_simulation(cell_world::World world, Location location, double rotation, unsigned int interval, Tracking_client &new_tracking_simulator) {
         tracking_simulator = &new_tracking_simulator;
         robot_world = world;
         habitat_polygon = Polygon(robot_world.space.center, robot_world.space.shape, robot_world.space.transformation);

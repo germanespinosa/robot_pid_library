@@ -98,7 +98,8 @@ int main(int argc, char *argv[])
         exit(1);
     }
     Location location = map[spawn_coordinates].location;
-    Robot_simulator::start_simulation(world, location, rotation, interval, tracking_server);
+    agent_tracking::Tracking_client tracker;
+    Robot_simulator::start_simulation(world, location, rotation, interval, tracker);
     Server<Robot_simulator> server;
     if (!server.start(Robot::port())) {
         std::cout << "Server setup failed " << std::endl;

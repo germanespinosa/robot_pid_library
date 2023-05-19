@@ -26,7 +26,7 @@ endif()
 ####
 
 string(APPEND CMAKE_CXX_FLAGS " -pthread ")
-install_git_dependency( Gamepad_lib
+install_git_dependency(Gamepad_lib
         https://github.com/germanespinosa/gamepad_lib
         CMAKE_PROJECT
         IMPORT_TARGETS gamepad_lib)
@@ -34,22 +34,28 @@ install_git_dependency(Cellworld
         https://github.com/germanespinosa/cellworld
         CMAKE_PROJECT
         IMPORT_TARGETS cellworld requests json-cpp)
-install_git_dependency(Params-cpp https://github.com/germanespinosa/params-cpp
+install_git_dependency(Params-cpp
+        https://github.com/germanespinosa/params-cpp
         CMAKE_PROJECT
         IMPORT_TARGETS params-cpp)
-install_git_dependency(Easy-tcp https://github.com/germanespinosa/easy-tcp
+install_git_dependency(Easy-tcp
+        https://github.com/germanespinosa/easy-tcp
         CMAKE_PROJECT
         IMPORT_TARGETS easy-tcp)
-install_git_dependency(Tcp_messages https://github.com/germanespinosa/tcp-messages
+install_git_dependency(Tcp_messages
+        https://github.com/germanespinosa/tcp-messages
         CMAKE_PROJECT
         IMPORT_TARGETS tcp_messages)
-install_git_dependency(Agent_tracking https://github.com/germanespinosa/agent_tracking
+install_git_dependency(Agent_tracking
+        https://github.com/germanespinosa/agent_tracking
         CMAKE_PROJECT
         IMPORT_TARGETS agent_tracking)
-install_git_dependency(Experiment_service https://github.com/germanespinosa/experiment_service
+install_git_dependency(Experiment_service
+        https://github.com/germanespinosa/experiment_service
         CMAKE_PROJECT
         IMPORT_TARGETS experiment_service)
-install_git_dependency(Controller https://github.com/germanespinosa/cellworld_pid_controller
+install_git_dependency(Controller
+        https://github.com/germanespinosa/cellworld_pid_controller
         CMAKE_PROJECT
         IMPORT_TARGETS controller
         CONNECTED)
@@ -110,6 +116,9 @@ include_directories( include )
 
 add_executable(fake_robot src/tool/fake_robot.cpp)
 target_link_libraries( fake_robot PUBLIC robot_lib)
+
+add_executable(robot_simulator src/tool/robot_simulator_main.cpp)
+target_link_libraries( robot_simulator PUBLIC robot_lib)
 
 add_executable(stop_fake_robot src/tool/stop_fake_robot.cpp)
 target_link_libraries( stop_fake_robot PUBLIC robot_lib)
