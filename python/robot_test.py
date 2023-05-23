@@ -39,7 +39,7 @@ def on_click(event):
             return
         current_predator_destination = destination_cell.location
         controller.set_destination(destination_cell.location)
-        destination_circle.set(center = (current_predator_destination.x, current_predator_destination.y), color = explore_color)
+        destination_circle.set(center=(current_predator_destination.x, current_predator_destination.y), color=explore_color)
 
 
 
@@ -87,7 +87,6 @@ while running:
 
     display.fig.canvas.draw_idle()
     display.fig.canvas.start_event_loop(0.1)
-    print ("it's working")
 #    sleep(0.1)
 
 controller.unsubscribe()

@@ -49,11 +49,13 @@ install_git_dependency(Tcp_messages
 install_git_dependency(Agent_tracking
         https://github.com/germanespinosa/agent_tracking
         CMAKE_PROJECT
-        IMPORT_TARGETS agent_tracking)
+        IMPORT_TARGETS agent_tracking
+        CONNECTED)
 install_git_dependency(Experiment_service
         https://github.com/germanespinosa/experiment_service
         CMAKE_PROJECT
-        IMPORT_TARGETS experiment_service)
+        IMPORT_TARGETS experiment_service
+        CONNECTED)
 install_git_dependency(Controller
         https://github.com/germanespinosa/cellworld_pid_controller
         CMAKE_PROJECT
@@ -106,7 +108,8 @@ target_link_libraries( robot_lib
         params-cpp
         gamepad_lib
         experiment_service
-        controller)
+        controller
+        cellworld)
 
 ###
 ### UTILITIES SETUP
@@ -119,6 +122,12 @@ target_link_libraries( fake_robot PUBLIC robot_lib)
 
 add_executable(robot_simulator src/tool/robot_simulator_main.cpp)
 target_link_libraries( robot_simulator PUBLIC robot_lib)
+
+add_executable(controller_simulator src/tool/controller_simulator_main.cpp)
+target_link_libraries( controller_simulator PUBLIC robot_lib)
+
+add_executable(experiment_simulator src/tool/experiment_simulator_main.cpp)
+target_link_libraries( experiment_simulator PUBLIC robot_lib)
 
 add_executable(stop_fake_robot src/tool/stop_fake_robot.cpp)
 target_link_libraries( stop_fake_robot PUBLIC robot_lib)

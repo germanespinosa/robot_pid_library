@@ -24,11 +24,6 @@ time_out = 1.0
 # ADD PREDATOR AND PREY TO WORLD
 display.set_agent_marker("predator", Agent_markers.arrow())
 
-# ADD PREDATOR DESTINATION TO WORLD
-explore_color = "magenta"
-pursue_color = "cyan"
-spawn_color = "green"
-
 running = True
 while running:
 

@@ -117,10 +117,6 @@ int main(int argc, char *argv[])
         cout << "failed to start controller" << endl;
         exit(1);
     }
-
-    auto &tracker = tracking_server.create_local_client<agent_tracking::Tracking_client>();
-    tracker.connect();
-    tracker.subscribe();
     while (Robot_simulator::is_running())
         if (tracker.contains_agent_state("predator")){
             if (verbose) cout << "track: " << tracker.get_current_state("predator") << endl;
