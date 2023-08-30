@@ -31,16 +31,16 @@ install_git_dependency( Gamepad_lib
         CMAKE_PROJECT
         IMPORT_TARGETS gamepad_lib)
 install_git_dependency(Cellworld
-        https://github.com/germanespinosa/cellworld
+        https://github.com/cellworld/cellworld
         CMAKE_PROJECT
         IMPORT_TARGETS cellworld requests json-cpp)
-install_git_dependency(Params-cpp https://github.com/germanespinosa/params-cpp
+install_git_dependency(Params-cpp https://github.com/cellworld/dependency_params-cpp
         CMAKE_PROJECT
         IMPORT_TARGETS params-cpp)
-install_git_dependency(Easy-tcp https://github.com/germanespinosa/easy-tcp
+install_git_dependency(Easy-tcp https://github.com/cellworld/dependency_easy-tcp
         CMAKE_PROJECT
         IMPORT_TARGETS easy-tcp)
-install_git_dependency(Tcp_messages https://github.com/cellworld-neuro/dependency_tcp-messages
+install_git_dependency(Tcp_messages https://github.com/cellworld/dependency_tcp-messages
         CMAKE_PROJECT
         IMPORT_TARGETS tcp_messages)
 install_git_dependency(Agent_tracking https://github.com/germanespinosa/agent_tracking
