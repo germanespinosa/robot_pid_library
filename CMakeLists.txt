@@ -27,7 +27,7 @@ endif()
 
 string(APPEND CMAKE_CXX_FLAGS " -pthread ")
 install_git_dependency( Gamepad_lib
-        https://github.com/germanespinosa/gamepad_lib
+        https://github.com/cellworld/dependency_gamepad_lib
         CMAKE_PROJECT
         IMPORT_TARGETS gamepad_lib)
 install_git_dependency(Cellworld
